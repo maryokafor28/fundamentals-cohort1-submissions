@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@layer base {
+    input {
+        @apply focus:outline-none
+    }
+}
+
+@layer components {
+  .section-layout {
+    @apply flex flex-col justify-center items-center px-2  py-12   space-y-4;
+  }
+  .section-title {
+    @apply text-slate-100 text-4xl text-center;
+  }
+
+  .section-description {
+    @apply text-center text-slate-400 max-w-md mx-auto;
+  }
+  .about-card{
+    @apply bg-[#1a2437] rounded-lg p-4 border border-[#49566e] hover:border-[#377af7] hover:cursor-pointer
+  }
+
+  .community-card {
+    @apply bg-[#1a2437] rounded-lg p-4 border border-[#49566e] hover:border-[#377af7] hover:cursor-pointer pr-32
+  }
+  
+}
+
+

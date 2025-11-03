@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+/* 
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424; */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  h3, h4 {
+    @apply font-bold
+  }
+  
+  input {
+    @apply border border-slate-300 p-2 rounded-sm
+  }
+
+  label {
+    @apply pt-4
+  }
+}
+
+@layer components{
+  .header-item {
+    @apply flex items-center gap-1 border px-3 py-1 rounded-xl h-fit cursor-pointer;
+  }
+
+  .product-filter {
+    @apply  flex items-center gap-2 px-8 cursor-pointer
+  }
+
+  .selected-product-filter {
+    @apply bg-white rounded-xl
+  }
+
+  .stock-avalibale{
+    @apply bg-slate-200 text-xs py-1 px-2 rounded-2xl
+  }
+
+  .btn-pry{
+    @apply bg-white text-2xl border px-2 rounded-md
+  }
+  .btn {
+    @apply text-slate-50 font-bold  px-3 py-1 rounded-xl
+  }
+}

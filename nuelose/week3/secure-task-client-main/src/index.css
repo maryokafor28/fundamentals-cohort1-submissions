@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@layer base {
+ 
+
+  p {
+    /* @apply text-slate-400 */
+  }
+
+  input {
+    @apply bg-slate-200 p-2 rounded-lg
+  }
+
+  label {
+    @apply font-semibold pt-2
+  }
+  
+}
