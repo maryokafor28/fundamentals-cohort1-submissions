@@ -1,0 +1,33 @@
+[submodule "ozavcodez/week-one/frontend/E-commerce-checkout-system-frontend"]
+	path = ozavcodez/week-one/frontend/E-commerce-checkout-system-frontend
+	url = https://github.com/ozavcodez/E-commerce-checkout-system-frontend.git
+[submodule "ozavcodez/week-one/backend/E-commerce-checkout-system-backend"]
+	path = ozavcodez/week-one/backend/E-commerce-checkout-system-backend
+	url = https://github.com/ozavcodez/E-commerce-checkout-system-backend.git
+[submodule "ozavcodez/week-two/backend/brave-server-optimization"]
+	path = ozavcodez/week-two/backend/brave-server-optimization
+	url = https://github.com/ozavcodez/brave-server-optimization
+[submodule "ozavcodez/week-three/frontend/security-task-platform-frontend"]
+	path = ozavcodez/week-three/frontend/security-task-platform-frontend
+	url = https://github.com/ozavcodez/security-task-platform-frontend
+[submodule "ozavcodez/week-three/backend/security-task-platform-backend"]
+	path = ozavcodez/week-three/backend/security-task-platform-backend
+	url = https://github.com/ozavcodez/security-task-platform-backend
+[submodule "ozavcodez/week-four/frontend/devconnect-frontend"]
+	path = ozavcodez/week-four/frontend/devconnect-frontend
+	url = https://github.com/ozavcodez/devconnect-frontend
+[submodule "ozavcodez/week-four/backend/devconnect-backend"]
+	path = ozavcodez/week-four/backend/devconnect-backend
+	url = https://github.com/ozavcodez/devconnect-backend
+[submodule "ozavcodez/week-five/backend/pulsetrack-backend"]
+	path = ozavcodez/week-five/backend/pulsetrack-backend
+	url = https://github.com/ozavcodez/pulsetrack-backend.git
+[submodule "ozavcodez/week-five/frontend/pulsetrack-frontend"]
+	path = ozavcodez/week-five/frontend/pulsetrack-frontend
+	url = https://github.com/ozavcodez/pulsetrack-frontend.git
+[submodule "ozavcodez/week-six/backend/flowserve-backend"]
+	path = ozavcodez/week-six/backend/flowserve-backend
+	url = https://github.com/ozavcodez/flowserve-backend
+[submodule "ozavcodez/week-six/frontend/flowserve-frontend"]
+	path = ozavcodez/week-six/frontend/flowserve-frontend
+	url = https://github.com/ozavcodez/flowserve-frontend
