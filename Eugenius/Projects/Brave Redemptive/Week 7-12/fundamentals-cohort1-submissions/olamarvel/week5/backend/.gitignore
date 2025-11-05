@@ -1,6 +1,0 @@
-node_modules
-.idx
-dist
-.env
-*/dev.nix
-.idx/dev.nix
