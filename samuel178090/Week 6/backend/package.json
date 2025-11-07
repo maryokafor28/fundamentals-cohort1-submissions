@@ -1,0 +1,43 @@
+{
+  "name": "flowserve-backend",
+  "version": "1.0.0",
+  "description": "FlowServe Digital Payment Platform Backend",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node index-mock.js",
+    "start": "node index.js",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:seed": "node prisma/seed.js",
+    "production": "NODE_ENV=production node index-mock.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.7.0",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "stripe": "^14.9.0",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.7.0"
+  },
+  "keywords": [
+    "payment",
+    "fintech",
+    "api",
+    "nodejs",
+    "express",
+    "prisma",
+    "postgresql"
+  ],
+  "author": "FlowServe Team",
+  "license": "MIT"
+}

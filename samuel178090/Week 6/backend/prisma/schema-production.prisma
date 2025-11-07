@@ -1,0 +1,266 @@
+// Production-ready Prisma schema for FlowServe
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  UID                        String   @id @default(uuid())
+  firstName                  String   @db.VarChar(50)
+  LastName                   String   @db.VarChar(50)
+  phone                      String   @unique @db.VarChar(15)
+  email                      String   @unique @db.VarChar(100)
+  username                   String   @unique @db.VarChar(30)
+  password                   String   @db.VarChar(255)
+  nationalID                 String   @unique @db.VarChar(20)
+  nationalIdFileName         String?  @db.VarChar(255)
+  birthdate                  DateTime @db.Date
+  balance                    Float    @default(0.0) @db.DoublePrecision
+  isActive                   Boolean  @default(true)
+  isVerified                 Boolean  @default(false)
+  role                       UserRole @default(USER)
+  lastLoginAt                DateTime?
+  passwordResetToken         String?  @db.VarChar(255)
+  passwordResetExpires       DateTime?
+  emailVerificationToken     String?  @db.VarChar(255)
+  emailVerificationExpires   DateTime?
+  twoFactorEnabled           Boolean  @default(false)
+  twoFactorSecret            String?  @db.VarChar(255)
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+
+  // Relations
+  sentTransactions           Transaction[]     @relation("SenderTransactions")
+  receivedTransactions       Transaction[]     @relation("RecipientTransactions")
+  sentTransactionRequests    Transaction[]     @relation("RequesterTransactions")
+  receivedTransactionRequests Transaction[]    @relation("ReceiverTransactions")
+  VirtualCreditCard          VirtualCreditCard?
+  ownedSubaccounts           Subaccount[]      @relation("SubaccountOwner")
+  notifications              Notification[]
+  auditLogs                  AuditLog[]
+  sessions                   UserSession[]
+
+  @@map("users")
+  @@index([phone])
+  @@index([email])
+  @@index([username])
+  @@index([nationalID])
+  @@index([createdAt])
+}
+
+model Subaccount {
+  id                String   @id @default(uuid())
+  firstName         String   @db.VarChar(50)
+  lastName          String   @db.VarChar(50)
+  phone             String   @unique @db.VarChar(15)
+  username          String   @unique @db.VarChar(30)
+  balance           Float    @default(0.0) @db.DoublePrecision
+  isActive          Boolean  @default(true)
+  spendingLimit     Float?   @db.DoublePrecision
+  dailyLimit        Float?   @db.DoublePrecision
+  monthlyLimit      Float?   @db.DoublePrecision
+  ownerId           String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  owner             User          @relation("SubaccountOwner", fields: [ownerId], references: [UID], onDelete: Cascade)
+  sentTransactions  Transaction[] @relation("SubaccountSenderTransactions")
+  receivedTransactions Transaction[] @relation("SubaccountRecipientTransactions")
+
+  @@map("subaccounts")
+  @@index([ownerId])
+  @@index([phone])
+  @@index([username])
+}
+
+model Transaction {
+  id              String            @id @default(uuid())
+  amount          Float             @db.DoublePrecision
+  description     String?           @db.Text
+  status          TransactionStatus @default(PENDING)
+  transactionType TransactionType
+  paymentMethod   PaymentMethod     @default(WALLET)
+  reference       String?           @unique @db.VarChar(100)
+  metadata        Json?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  completedAt     DateTime?
+  
+  // User relations
+  sender_id       String?
+  recipient_id    String?
+  requester_id    String?
+  reciever_id     String?
+  
+  sender          User?             @relation("SenderTransactions", fields: [sender_id], references: [UID])
+  recipient       User?             @relation("RecipientTransactions", fields: [recipient_id], references: [UID])
+  requester       User?             @relation("RequesterTransactions", fields: [requester_id], references: [UID])
+  reciever        User?             @relation("ReceiverTransactions", fields: [reciever_id], references: [UID])
+  
+  // Subaccount relations
+  subaccountSender_id    String?
+  subaccountRecipient_id String?
+  
+  subaccountSender       Subaccount? @relation("SubaccountSenderTransactions", fields: [subaccountSender_id], references: [id])
+  subaccountRecipient    Subaccount? @relation("SubaccountRecipientTransactions", fields: [subaccountRecipient_id], references: [id])
+
+  @@map("transactions")
+  @@index([sender_id])
+  @@index([recipient_id])
+  @@index([requester_id])
+  @@index([reciever_id])
+  @@index([status])
+  @@index([transactionType])
+  @@index([createdAt])
+  @@index([reference])
+}
+
+model VirtualCreditCard {
+  id                String   @id @default(uuid())
+  cardNumber        String   @unique @db.VarChar(20)
+  amount            Float    @db.DoublePrecision
+  expirationDate    DateTime
+  usedFlag          Boolean  @default(false)
+  creditCardType    String   @db.VarChar(20)
+  ccHolderName      String   @db.VarChar(100)
+  verificationCode  Int
+  isActive          Boolean  @default(true)
+  lastUsedAt        DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [UID], onDelete: Cascade)
+
+  @@map("virtual_credit_cards")
+  @@index([userId])
+  @@index([cardNumber])
+  @@index([expirationDate])
+}
+
+model Notification {
+  id          String             @id @default(uuid())
+  title       String             @db.VarChar(255)
+  message     String             @db.Text
+  type        NotificationType   @default(INFO)
+  isRead      Boolean            @default(false)
+  metadata    Json?
+  createdAt   DateTime           @default(now())
+  readAt      DateTime?
+  
+  userId      String
+  user        User               @relation(fields: [userId], references: [UID], onDelete: Cascade)
+
+  @@map("notifications")
+  @@index([userId])
+  @@index([isRead])
+  @@index([type])
+  @@index([createdAt])
+}
+
+model UserSession {
+  id          String   @id @default(uuid())
+  sessionToken String  @unique @db.VarChar(255)
+  deviceInfo  String?  @db.Text
+  ipAddress   String?  @db.VarChar(45)
+  userAgent   String?  @db.Text
+  isActive    Boolean  @default(true)
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  lastUsedAt  DateTime @default(now())
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [UID], onDelete: Cascade)
+
+  @@map("user_sessions")
+  @@index([userId])
+  @@index([sessionToken])
+  @@index([expiresAt])
+}
+
+model AuditLog {
+  id          String     @id @default(uuid())
+  action      String     @db.VarChar(100)
+  resource    String     @db.VarChar(100)
+  resourceId  String?    @db.VarChar(100)
+  oldValues   Json?
+  newValues   Json?
+  ipAddress   String?    @db.VarChar(45)
+  userAgent   String?    @db.Text
+  createdAt   DateTime   @default(now())
+  
+  userId      String?
+  user        User?      @relation(fields: [userId], references: [UID], onDelete: SetNull)
+
+  @@map("audit_logs")
+  @@index([userId])
+  @@index([action])
+  @@index([resource])
+  @@index([createdAt])
+}
+
+model SystemConfig {
+  id          String   @id @default(uuid())
+  key         String   @unique @db.VarChar(100)
+  value       String   @db.Text
+  description String?  @db.Text
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("system_config")
+  @@index([key])
+}
+
+// Enums
+enum UserRole {
+  USER
+  SUBACCOUNT
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+  EXPIRED
+  APPROVED
+  REJECTED
+}
+
+enum TransactionType {
+  TRANSFER
+  REQUEST
+  DEPOSIT
+  WITHDRAWAL
+  REFUND
+  ONLINE_PAYMENT
+  VCC_PAYMENT
+  SUBACCOUNT_TRANSFER
+}
+
+enum PaymentMethod {
+  WALLET
+  CREDIT_CARD
+  BANK_TRANSFER
+  CASH
+  VCC
+  FAWRY
+}
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+  TRANSACTION
+  SECURITY
+  SYSTEM
+}

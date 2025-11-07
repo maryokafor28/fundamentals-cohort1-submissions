@@ -1,0 +1,118 @@
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import {
+	Badge,
+	Button,
+	Dropdown,
+	DropdownButton,
+	Row,
+	Table,
+} from 'react-bootstrap';
+import toast from 'react-hot-toast';
+import { Orders } from '../../services/order.service';
+
+const AllOrders = () => {
+
+	const [orders, setOrders] = useState<any[]>([]);
+	const [loading, setLoading] = useState(false);
+	useEffect(() => {
+		fetchOrders();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+	const fetchOrders = async (status?: string) => {
+		setLoading(true);
+		try {
+			const query = status ? { status } : undefined;
+			const response = await Orders.getAllOrders(query);
+			if (!response.success) {
+				throw new Error(response.message);
+			}
+			setOrders(response.result);
+		} catch (error: any) {
+			if (error.response) {
+				if (Array.isArray(error.response?.data?.message)) {
+					return error.response.data.message.forEach((message: any) => {
+						toast.error(message);
+					});
+				} else {
+					return toast.error(error.response.data.message);
+				}
+			}
+			toast.error(error.message);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const dateToLocal = (date: any) => {
+		return new Date(date).toLocaleString();
+	};
+
+	return (
+		<>
+			<Row>
+				<DropdownButton
+					variant='outline-secondary'
+					title='Filter by status'
+					id='input-group-dropdown-2'
+					onSelect={(e) => {
+						fetchOrders(e || '');
+					}}
+				>
+					<Dropdown.Item href='#' eventKey=''>
+						All
+					</Dropdown.Item>
+					<Dropdown.Item href='#' eventKey='pending'>
+						Pending
+					</Dropdown.Item>
+					<Dropdown.Item href='#' eventKey='completed'>
+						Complete
+					</Dropdown.Item>
+				</DropdownButton>
+			</Row>
+			{loading && <div className="text-center my-3">Loading orders...</div>}
+			<Table responsive striped hover>
+				<thead>
+					<tr>
+						<th>Order ID</th>
+						<th>Order Date</th>
+						<th>Order Status</th>
+						<th>Order Total</th>
+						<th>Order Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{orders.length > 0 ? (
+						orders.map((order: any) => (
+							<tr key={order._id}>
+								<td>
+									<Link href={`/orders/${order._id}`} style={{ color: 'green', textDecoration: 'none' }}>
+										{order.orderId}
+									</Link>
+								</td>
+								<td>{dateToLocal(order.orderDate)}</td>
+								<td>
+									<Badge bg={order.orderStatus === 'completed' ? 'success' : order.orderStatus === 'pending' ? 'warning' : 'secondary'}>
+										{order.orderStatus.toUpperCase()}
+									</Badge>
+								</td>
+								<td>₹{order.paymentInfo.paymentAmount} </td>
+								<td>
+									<Link href={`/orders/${order._id}`}>
+										<Button variant='outline-dark' size='sm'>View Details</Button>
+									</Link>
+								</td>
+							</tr>
+						))
+					) : (
+						<tr>
+							<td colSpan={5}>No orders found</td>
+						</tr>
+					)}
+				</tbody>
+			</Table>
+		</>
+	);
+};
+
+export default AllOrders;

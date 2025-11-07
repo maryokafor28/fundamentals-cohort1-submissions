@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@layer base {
+  h1 {
+    @apply font-extrabold text-center text-2xl
+
+  }
+
+  input {
+    @apply bg-slate-200 p-2 rounded-lg
+  }
+}
+
+@layer components {
+  .line-items{
+    @apply flex  gap-2 
+  }
+
+  .container {
+    @apply space-y-4 border border-slate-300 max-w-4xl rounded-2xl p-6 
+  }
+}
+
+

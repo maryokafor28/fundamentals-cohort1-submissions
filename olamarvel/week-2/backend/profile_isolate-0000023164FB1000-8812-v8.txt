@@ -1,0 +1,179 @@
+Statistical profiling result from isolate-0000023164FB1000-8812-v8.log, (8591 ticks, 148 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+   3924   45.7%          C:\Windows\SYSTEM32\ntdll.dll
+    119    1.4%          C:\Program Files\nodejs\node.exe
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+   4398   51.2%   96.7%  JS: *fibonacci file:///C:/Users/LENOVO/Documents/olamarvel%20imagine%202/brave/brave-week-2-backend/index.ts:7:19
+      1    0.0%    0.0%  JS: ^onwrite node:internal/streams/writable:615:17
+      1    0.0%    0.0%  JS: ^checkListener node:events:274:23
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [Summary]:
+   ticks  total  nonlib   name
+   4400   51.2%   96.7%  JavaScript
+      0    0.0%    0.0%  C++
+      1    0.0%    0.0%  GC
+   4043   47.1%          Shared libraries
+    148    1.7%          Unaccounted
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+   4398   51.2%  JS: *fibonacci file:///C:/Users/LENOVO/Documents/olamarvel%20imagine%202/brave/brave-week-2-backend/index.ts:7:19
+   4398  100.0%    JS: *fibonacci file:///C:/Users/LENOVO/Documents/olamarvel%20imagine%202/brave/brave-week-2-backend/index.ts:7:19
+   4398  100.0%      JS: *fibonacci file:///C:/Users/LENOVO/Documents/olamarvel%20imagine%202/brave/brave-week-2-backend/index.ts:7:19
+   4398  100.0%        JS: *fibonacci file:///C:/Users/LENOVO/Documents/olamarvel%20imagine%202/brave/brave-week-2-backend/index.ts:7:19
+   4398  100.0%          JS: *fibonacci file:///C:/Users/LENOVO/Documents/olamarvel%20imagine%202/brave/brave-week-2-backend/index.ts:7:19
+   4398  100.0%            JS: *fibonacci file:///C:/Users/LENOVO/Documents/olamarvel%20imagine%202/brave/brave-week-2-backend/index.ts:7:19
+
+   3924   45.7%  C:\Windows\SYSTEM32\ntdll.dll
+
+    148    1.7%  UNKNOWN
+
+    119    1.4%  C:\Program Files\nodejs\node.exe
+     67   56.3%    C:\Program Files\nodejs\node.exe
+     43   64.2%      JS: ~Script node:vm:85:14
+     43  100.0%        JS: ~_moduleCompile C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\v8-compile-cache-lib\v8-compile-cache.js:207:17
+     43  100.0%          JS: ~_ownModuleCompile C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\v8-compile-cache-lib\v8-compile-cache.js:157:31
+     43  100.0%            JS: ^<anonymous> node:internal/modules/cjs/loader:1785:37
+      2    3.0%      JS: ~__require node:internal/deps/amaro/dist/index:8:49
+      2  100.0%        JS: ~<anonymous> node:internal/deps/amaro/dist/index:1:1
+      2  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+      2  100.0%            JS: ^requireBuiltin node:internal/bootstrap/realm:421:24
+      2    3.0%      JS: ~<anonymous> node:internal/main/run_main_module:1:1
+      2    3.0%      C:\Program Files\nodejs\node.exe
+      1   50.0%        JS: ~mimeScore C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\mime-types\mimeScore.js:35:37
+      1  100.0%          JS: ~_preferredType C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\mime-types\index.js:187:25
+      1  100.0%            JS: ^forEachMimeType C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\mime-types\index.js:155:52
+      1   50.0%        JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:16:15
+      1  100.0%          JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:1:11
+      1  100.0%            JS: ~_ownModuleCompile C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\v8-compile-cache-lib\v8-compile-cache.js:157:31
+      1    1.5%      JS: ~writeHead node:_http_server:349:19
+      1  100.0%        JS: ~_implicitHeader node:_http_server:344:68
+      1  100.0%          JS: ~write_ node:_http_outgoing:943:16
+      1  100.0%            JS: ~end node:_http_outgoing:1085:45
+      1    1.5%      JS: ~socketListenerWrap node:_http_server:1203:37
+      1  100.0%        JS: ~socketOnError node:_http_server:883:23
+      1  100.0%          JS: ^emit node:events:465:44
+      1  100.0%            JS: ^emit node:domain:478:44
+      1    1.5%      JS: ~parseBinaryExpressionRest C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:36296:37
+      1  100.0%        JS: ~parseBinaryExpressionOrHigher C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:36288:41
+      1  100.0%          JS: ~parseAssignmentExpressionOrHigher C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:35948:45
+      1  100.0%            JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:37165:38
+      1    1.5%      JS: ~lib/wasm.js node:internal/deps/amaro/dist/index:35:16
+      1  100.0%        JS: ~__require node:internal/deps/amaro/dist/index:8:49
+      1  100.0%          JS: ~<anonymous> node:internal/deps/amaro/dist/index:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+      1    1.5%      JS: ~free node:internal/freelist:21:7
+      1  100.0%        JS: ~freeParser node:_http_common:180:20
+      1  100.0%          JS: ~socketOnClose node:_http_server:802:23
+      1  100.0%            JS: ^emit node:events:465:44
+      1    1.5%      JS: ~etag C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\etag\index.js:70:15
+      1  100.0%        JS: ~generateETag C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\express\lib\utils.js:248:32
+      1  100.0%          JS: ~send C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\express\lib\response.js:123:25
+      1  100.0%            JS: ~json C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\express\lib\response.js:237:25
+      1    1.5%      JS: ~createCompilerDiagnostic C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:21690:34
+      1  100.0%        JS: ~getErrorForNoInputFiles C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:43416:33
+      1  100.0%          JS: ~getFileNames C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:43292:24
+      1  100.0%            JS: ~parseJsonConfigFileContentWorker C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:43177:42
+      1    1.5%      JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:2289:35
+      1  100.0%        JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:16:15
+      1  100.0%          JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:1:11
+      1  100.0%            JS: ~_ownModuleCompile C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\v8-compile-cache-lib\v8-compile-cache.js:157:31
+      1    1.5%      JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:16:15
+      1  100.0%        JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\typescript\lib\typescript.js:1:11
+      1  100.0%          JS: ~_ownModuleCompile C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\v8-compile-cache-lib\v8-compile-cache.js:157:31
+      1  100.0%            JS: ^<anonymous> node:internal/modules/cjs/loader:1785:37
+      1    1.5%      JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\supports-color\index.js:1:1
+      1  100.0%        JS: ^<anonymous> node:internal/modules/cjs/loader:1638:37
+      1  100.0%          JS: ^<anonymous> node:internal/modules/cjs/loader:1785:37
+      1  100.0%            JS: ~require.extensions.<computed> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\ts-node\dist\index.js:849:40
+      1    1.5%      JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\express\lib\application.js:471:26
+      1  100.0%        C:\Program Files\nodejs\node.exe
+      1  100.0%          JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\express\lib\application.js:1:1
+      1  100.0%            JS: ^<anonymous> node:internal/modules/cjs/loader:1638:37
+      1    1.5%      JS: wasm-function[198]
+      1  100.0%        JS: wasm-function[164]
+      1  100.0%          JS: wasm-function[149]
+      1  100.0%            JS: wasm-function[1181]
+      1    1.5%      JS: wasm-function[149]
+      1  100.0%        JS: wasm-function[1181]
+      1  100.0%          JS: wasm-function[166]
+      1  100.0%            JS: wasm-function[1406]
+      1    1.5%      JS: ^nextTick node:internal/process/task_queues:113:18
+      1  100.0%        JS: ^resume node:internal/streams/readable:1247:16
+      1  100.0%          JS: ^Readable.resume node:internal/streams/readable:1227:37
+      1  100.0%            JS: ^Readable.on node:internal/streams/readable:1127:33
+      1    1.5%      JS: ^handle C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\router\index.js:149:43
+      1  100.0%        JS: ^handle C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\express\lib\application.js:152:29
+      1  100.0%          JS: ^app C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\express\lib\express.js:37:21
+      1  100.0%            JS: ^emit node:events:465:44
+      1    1.5%      JS: ^defaultResolveImpl node:internal/modules/cjs/loader:1007:30
+      1  100.0%        JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\ts-node\dist\index.js:1:1
+      1  100.0%          JS: ~<anonymous> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\ts-node\register\index.js:1:1
+      1  100.0%            JS: ~<anonymous> node:internal/main/run_main_module:1:1
+      1    1.5%      JS: ^<anonymous> node:internal/modules/cjs/loader:1785:37
+      1  100.0%        JS: ^<anonymous> node:internal/modules/cjs/loader:1414:33
+      1  100.0%          JS: ^<anonymous> node:internal/modules/cjs/loader:1152:24
+      1  100.0%            JS: ^traceSync node:diagnostics_channel:320:12
+      1    1.5%      JS: ^<anonymous> node:internal/modules/cjs/loader:1152:24
+      1  100.0%        JS: ^traceSync node:diagnostics_channel:320:12
+      1  100.0%          JS: ^wrapModuleLoad node:internal/modules/cjs/loader:228:24
+      1  100.0%            JS: ^<anonymous> node:internal/modules/cjs/loader:1437:36
+     26   21.8%    JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+     24   92.3%      JS: ^requireBuiltin node:internal/bootstrap/realm:421:24
+     15   62.5%        JS: ^<anonymous> node:internal/util:775:18
+     15  100.0%          JS: ~<anonymous> node:internal/modules/esm/translators:522:46
+     15  100.0%            JS: ~#translate node:internal/modules/esm/loader:528:13
+      1    4.2%        JS: ~initCJSParseSync node:internal/modules/esm/translators:79:26
+      1  100.0%          JS: ~commonjsStrategy node:internal/modules/esm/translators:258:54
+      1  100.0%            JS: ~#translate node:internal/modules/esm/loader:528:13
+      1    4.2%        JS: ~<anonymous> node:worker_threads:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+      1  100.0%            JS: ^compileForPublicLoader node:internal/bootstrap/realm:332:25
+      1    4.2%        JS: ~<anonymous> node:repl:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+      1  100.0%            JS: ^compileForPublicLoader node:internal/bootstrap/realm:332:25
+      1    4.2%        JS: ~<anonymous> node:readline/promises:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+      1  100.0%            JS: ^requireBuiltin node:internal/bootstrap/realm:421:24
+      1    4.2%        JS: ~<anonymous> node:internal/streams/operators:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+      1  100.0%            JS: ^requireBuiltin node:internal/bootstrap/realm:421:24
+      1    4.2%        JS: ~<anonymous> node:internal/streams/duplex:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+      1  100.0%            JS: ^requireBuiltin node:internal/bootstrap/realm:421:24
+      1    4.2%        JS: ~<anonymous> node:internal/crypto/pbkdf2:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+      1  100.0%            JS: ^requireBuiltin node:internal/bootstrap/realm:421:24
+      1    4.2%        JS: ~<anonymous> node:cluster:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+      1  100.0%            JS: ^requireBuiltin node:internal/bootstrap/realm:421:24
+      1    4.2%        JS: ~<anonymous> node:_http_client:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:384:27
+      1  100.0%            JS: ^requireBuiltin node:internal/bootstrap/realm:421:24
+      2    7.7%      JS: ^compileForPublicLoader node:internal/bootstrap/realm:332:25
+      2  100.0%        JS: ^loadBuiltinModule node:internal/modules/helpers:101:27
+      2  100.0%          JS: ^loadBuiltinWithHooks node:internal/modules/cjs/loader:1124:30
+      2  100.0%            JS: ^<anonymous> node:internal/modules/cjs/loader:1152:24
+      5    4.2%    JS: ^wrapSafe node:internal/modules/cjs/loader:1578:18
+      5  100.0%      JS: ^<anonymous> node:internal/modules/cjs/loader:1638:37
+      5  100.0%        JS: ^<anonymous> node:internal/modules/cjs/loader:1785:37
+      4   80.0%          JS: ^require.extensions.<computed> C:\Users\LENOVO\Documents\olamarvel imagine 2\brave\brave-week-2-backend\node_modules\ts-node\dist\index.js:849:40
+      4  100.0%            JS: ^<anonymous> node:internal/modules/cjs/loader:1414:33
+      1   20.0%          JS: ^<anonymous> node:internal/modules/cjs/loader:1414:33
+      1  100.0%            JS: ^<anonymous> node:internal/modules/cjs/loader:1152:24
+      3    2.5%    JS: ^processTicksAndRejections node:internal/process/task_queues:72:35
+

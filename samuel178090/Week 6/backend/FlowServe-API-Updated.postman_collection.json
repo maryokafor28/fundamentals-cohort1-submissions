@@ -1,0 +1,323 @@
+{
+	"info": {
+		"_postman_id": "flowserve-api-2024",
+		"name": "FlowServe API - Updated",
+		"description": "Complete FlowServe API collection with localhost URLs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000"
+		}
+	],
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/health",
+					"host": ["{{baseUrl}}"],
+					"path": ["health"]
+				}
+			}
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{"key": "firstName", "value": "John", "type": "text"},
+								{"key": "LastName", "value": "Doe", "type": "text"},
+								{"key": "phone", "value": "01234567890", "type": "text"},
+								{"key": "email", "value": "john@example.com", "type": "text"},
+								{"key": "username", "value": "johndoe", "type": "text"},
+								{"key": "password", "value": "password123", "type": "text"},
+								{"key": "birthdate", "value": "1990-01-01", "type": "text"},
+								{"key": "nationalID", "value": "12345678901234", "type": "text"}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"01234567890\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["users"]
+						}
+					}
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/id/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "id", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get User by Phone",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/phone/01234567890",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "phone", "01234567890"]
+						}
+					}
+				},
+				{
+					"name": "Get User Transactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/1/transactions",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "1", "transactions"]
+						}
+					}
+				},
+				{
+					"name": "Get User Money Spent",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/1/money-spent",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "1", "money-spent"]
+						}
+					}
+				},
+				{
+					"name": "Get User Virtual Credit Card",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/1/virtual-credit-card",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "1", "virtual-credit-card"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Send Money by Phone",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"senderId\": \"1\",\n  \"recipientPhone\": \"01234567891\",\n  \"amount\": 100\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/transactions/send-money/phone",
+							"host": ["{{baseUrl}}"],
+							"path": ["transactions", "send-money", "phone"]
+						}
+					}
+				},
+				{
+					"name": "Send Money by Username",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"senderId\": \"1\",\n  \"recipientUsername\": \"janesmith\",\n  \"amount\": 50\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/transactions/send-money/username",
+							"host": ["{{baseUrl}}"],
+							"path": ["transactions", "send-money", "username"]
+						}
+					}
+				},
+				{
+					"name": "Request Money",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"senderId\": \"1\",\n  \"recipientPhone\": \"01234567891\",\n  \"amount\": 25\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/transactions/request-money",
+							"host": ["{{baseUrl}}"],
+							"path": ["transactions", "request-money"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Funds",
+			"item": [
+				{
+					"name": "Add Funds - Cash",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userPhoneNumber\": \"01234567890\",\n  \"amount\": 1000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/funds/cash/add-funds",
+							"host": ["{{baseUrl}}"],
+							"path": ["funds", "cash", "add-funds"]
+						}
+					}
+				},
+				{
+					"name": "Add Funds - Credit Card",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cardNumber\": \"4111111111111111\",\n  \"cvv\": \"123\",\n  \"expiryDate\": \"12/25\",\n  \"userPhoneNumber\": \"01234567890\",\n  \"amount\": 500\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/funds/credit/add-funds",
+							"host": ["{{baseUrl}}"],
+							"path": ["funds", "credit", "add-funds"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Virtual Credit Card",
+			"item": [
+				{
+					"name": "Generate VCC",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"visa_type\": \"visa\",\n  \"amount\": 200,\n  \"userId\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/VCC/generate-vcc",
+							"host": ["{{baseUrl}}"],
+							"path": ["VCC", "generate-vcc"]
+						}
+					}
+				},
+				{
+					"name": "Use VCC",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"creditCardNumber\": \"4111111111111111\",\n  \"cvc\": 123,\n  \"amount\": 100\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/VCC/use-vcc",
+							"host": ["{{baseUrl}}"],
+							"path": ["VCC", "use-vcc"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Subaccounts",
+			"item": [
+				{
+					"name": "Create Subaccount",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Jane\",\n  \"LastName\": \"Smith\",\n  \"phone\": \"01234567891\",\n  \"password\": \"password123\",\n  \"username\": \"janesmith\",\n  \"email\": \"jane@example.com\",\n  \"spendingLimit\": 500,\n  \"ownerID\": \"1\",\n  \"birthdate\": \"1995-05-15\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subaccounts",
+							"host": ["{{baseUrl}}"],
+							"path": ["subaccounts"]
+						}
+					}
+				},
+				{
+					"name": "Get Subaccount",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subaccounts/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["subaccounts", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Subaccount",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subaccounts/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["subaccounts", "1"]
+						}
+					}
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "brave-week-2-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": " tsc",
+    "devWithoutWorker": "nodemon --watch './**/*.ts' --exec ts-node index.ts",
+    "devWithWorker": "nodemon --watch './**/*.ts' --exec ts-node indexWithWorkerPooled.ts",
+    "createCliprofileWithoutWorker": "node --prof -r ts-node/register index.ts",
+    "createCliprofileWithWorker": "node --prof -r ts-node/register indexWithWorkerPooled.ts",
+    "startWithoutWorker": "node dist/indexWithWorkerPooled.js",
+    "bombtheServerWithnoWorker": "autocannon -c 100 -d 10 -m POST -H \"Content-Type=application/json\" -b \"{\\\"n\\\":38}\" http://localhost:3000/api/process-data --renderStatusCodes",
+    "bombtheServerWithWorker": "autocannon -c 100 -d 10 -m POST -H \"Content-Type=application/json\" -b \"{\\\"n\\\":38}\" http://localhost:5000/api/process-data --renderStatusCodes"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autocannon": "^8.0.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.6.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}

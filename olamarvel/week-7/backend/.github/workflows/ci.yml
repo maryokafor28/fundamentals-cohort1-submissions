@@ -1,0 +1,43 @@
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Create .env file
+      run: |
+        echo "MONGO_URI=mongodb://localhost:27017/pulse_test" >> .env
+        echo "ACCESS_TOKEN_SECRET=your_super_secret_access_token_key_for_testing" >> .env
+        echo "REFRESH_TOKEN_SECRET=your_super_secret_refresh_token_key_for_testing" >> .env
+        echo "ACCESS_TOKEN_EXPIRES=15m" >> .env
+        echo "REFRESH_TOKEN_EXPIRES=7d" >> .env
+
+    - name: Run tests
+      run: npm test

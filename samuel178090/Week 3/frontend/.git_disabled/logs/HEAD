@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 2c4ed47e24a216168cf02072f26854dad1109ad5 FassCode <josephsammy1994@gmail.com> 1760120767 -0700	commit (initial): Initial commit: Task Management Frontend with React and JWT Auth
+2c4ed47e24a216168cf02072f26854dad1109ad5 a3ce0d346965fd6f4c57442bcd4b7b31be3148db FassCode <josephsammy1994@gmail.com> 1760121087 -0700	commit (merge): Resolve merge conflict and add complete frontend
+a3ce0d346965fd6f4c57442bcd4b7b31be3148db c8b093c4a1af411ffd2fe5bfd2bec616456fb771 FassCode <josephsammy1994@gmail.com> 1760264536 -0700	commit: Fix API URL to use Render backend instead of localhost
+c8b093c4a1af411ffd2fe5bfd2bec616456fb771 8549b848c9ffe645b94e391d14873b2b2e3e2bf8 FassCode <josephsammy1994@gmail.com> 1760267644 -0700	commit: Move Vite to dependencies for Render build
+8549b848c9ffe645b94e391d14873b2b2e3e2bf8 45b7b4d85bdf0c34bde5dd9db0e660afe65d6d50 FassCode <josephsammy1994@gmail.com> 1760267965 -0700	commit: Add start script for Render deployment
+45b7b4d85bdf0c34bde5dd9db0e660afe65d6d50 67110ee551b8e2355292933d76c52c208a6f1744 FassCode <josephsammy1994@gmail.com> 1760271929 -0700	commit: Update API URL to correct backend

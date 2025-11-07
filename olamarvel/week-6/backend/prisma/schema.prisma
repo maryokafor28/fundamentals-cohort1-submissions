@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  role      Role     @default(USER)
+  balance   Float    @default(0.0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sentTransactions     Transaction[] @relation(name: "SenderTransactions")
+  receivedTransactions Transaction[] @relation(name: "ReceiverTransactions")
+  refreshTokens        RefreshToken[]
+
+  @@map("users")
+}
+
+model Transaction {
+  id        String          @id @default(cuid())
+  amount    Float
+  type      TransactionType
+  senderId    String
+  sender      User            @relation(fields: [senderId], references: [id], name: "SenderTransactions")
+  receiverId  String
+  receiver    User            @relation(fields: [receiverId], references: [id], name: "ReceiverTransactions")
+  createdAt DateTime        @default(now())
+
+  @@map("transactions")
+}
+
+model RefreshToken {
+  jti       String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@map("refresh_tokens")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+}

@@ -1,0 +1,90 @@
+.feed-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  background: var(--color-gray-0);
+  border-radius: var(--radius-3);
+  padding: 0.3rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feed-tabs .tab {
+  flex: 1;
+  padding: 1rem 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-gray-600);
+  border-radius: var(--radius-2);
+  transition: all 0.3s ease;
+  position: relative;
+  font-size: 0.95rem;
+}
+
+.feed-tabs .tab:hover {
+  color: var(--color-primary);
+  background: var(--color-primary-variant);
+}
+
+.feed-tabs .tab.active {
+  color: white;
+  background: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(51, 133, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.posts-container {
+  min-height: 400px;
+}
+
+.posts-container > p {
+  text-align: center;
+  color: var(--color-gray-600);
+  padding: 3rem 1rem;
+  background: var(--color-gray-0);
+  border-radius: var(--radius-3);
+  font-style: italic;
+}
+
+
+
+.comment {
+  padding: 1.2rem;
+  background: var(--color-gray-0);
+  border-radius: var(--radius-3);
+  margin-bottom: 0.8rem;
+  border-left: 3px solid var(--color-primary-variant);
+  transition: var(--transition);
+}
+
+.comment:hover {
+  border-left-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comment__header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.comment__header h5 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-gray-900);
+  font-weight: 600;
+}
+
+.comment__header small {
+  color: var(--color-gray-500);
+  font-size: 0.8rem;
+}
+
+.comment p {
+  margin: 0;
+  color: var(--color-gray-700);
+  line-height: 1.6;
+  padding-left: 3rem;
+}

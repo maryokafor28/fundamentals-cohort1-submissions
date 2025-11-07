@@ -1,0 +1,493 @@
+{
+	"info": {
+		"_postman_id": "a8c1b3f0-a1b2-4c3d-8e9f-a0b1c2d3e4f5",
+		"name": "PulseTrack API - Improved Docs",
+		"description": "Comprehensive API collection for the PulseTrack application, managing users, activities, appointments, and doctors. Includes request details, validation rules, controller/model insights, and example responses.\\n\\n**Environment Variables:**\\n- `baseUrl`: The base URL of your backend API (e.g., `http://localhost:5000`)\\n- `authToken`: Automatically set after a successful login to be used for protected routes.\\n\\n**Usage:**\\n1. Set `baseUrl` in your Postman environment.\\n2. Run the `Login User` request to get an `authToken`.\\n3. Use the `authToken` for all protected requests.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"description": "Handles user registration, login, and JWT token management.",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane.doe@example.com\",\n  \"password\": \"aStrongPassword123\",\n  \"age\": 28\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "**Route:** `POST /api/auth/register`\\n\\n**Description:** Registers a new user with the provided credentials.\\n\\n**Validation (express-validator):**\\n- `name`: `string`, required, not empty.\\n- `email`: `string`, required, valid email format (`isEmail`).\\n- `password`: `string`, required, min 8, max 20 characters.\\n- `age`: `number`, required, integer between 13 and 100 (`isInt({min:13, max:100})`).\\n\\n**Controller Logic (`Auth.register`):**\\n1. Validates request body using `express-validator`.\\n2. Hashes the provided password.\\n3. Checks if a user with the given email already exists.\\n4. Creates and saves a new `User` document in MongoDB.\\n\\n**Model Interaction:**\\n-   `User` Model: Creates a new document with `name`, `email`, hashed `password`, `age`, and initializes `refreshTokens` array.\\n\\n**Expected Responses:**\\n- **`201 Created`**: Successful registration.\\n- **`400 Bad Request`**: Validation errors or user already exists."
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.success && jsonData.token) {",
+									"    pm.environment.set(\"authToken\", jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"jane.doe@example.com\",\n  \"password\": \"aStrongPassword123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "**Route:** `POST /api/auth/login`\\n\\n**Description:** Logs in a user, generates an Access Token (JWT) and a Refresh Token. The Access Token is returned in the response body, and the Refresh Token is set as an `httpOnly` cookie.\\n\\n**Validation (express-validator):**\\n- `email`: `string`, required, valid email format (`isEmail`).\\n- `password`: `string`, required, min 8, max 20 characters.\\n\\n**Controller Logic (`Auth.login`):**\\n1. Validates request body.\\n2. Finds the user by email.\\n3. Compares the provided password with the stored hashed password.\\n4. Generates a new Access Token (`signAccess`) and a Refresh Token (`signRefresh`).\\n5. Stores the Refresh Token (with JTI) in the user's `refreshTokens` array in MongoDB.\\n6. Sets the `refreshToken` as an `httpOnly` cookie.\\n7. Returns the Access Token in the response body."
+					},
+					"response": []
+				},
+                {
+					"name": "Get Current User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/getUser",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"getUser"
+							]
+						},
+						"description": "**Route:** `GET /api/auth/getUser`\\n\\n**Description:** Retrieves the profile details of the currently authenticated user.\\n\\n**Authentication:** Requires a valid Access Token in the `Authorization: Bearer <token>` header.\\n\\n**Controller Logic (`Auth.getUser`):**\\n1. The `protect` middleware verifies the Access Token and attaches `req.user.id`.\\n2. Finds the user by `req.user.id`.\\n3. Returns specific non-sensitive fields of the user."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "**Route:** `POST /api/auth/logout`\\n\\n**Description:** Logs out the user by clearing the `refreshToken` cookie and removing the token from the database.\\n\\n**Authentication:** Requires a valid Access Token."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activities",
+			"description": "Manage user activities. Requires authentication.",
+			"item": [
+				{
+					"name": "Create Activity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"Running\",\n    \"description\": \"A 5k run in the morning.\",\n    \"durationMinutes\": 30,\n    \"caloriesBurned\": 350\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/activities",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"activities"
+							]
+						},
+						"description": "**Route:** `POST /api/activities`\\n\\n**Description:** Creates a new activity for the logged-in user.\\n\\n**Authentication:** Requires a valid Access Token.\\n\\n**Validation:**\\n- `type`: Required, string, 3-20 characters.\\n- `description`: Optional, string, 10-200 characters.\\n- `durationMinutes`: Optional, integer, 1-10000.\\n- `caloriesBurned`: Optional, integer, 1-10000."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Activities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/activities",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"activities"
+							]
+						},
+						"description": "**Route:** `GET /api/activities`\\n\\n**Description:** Retrieves all activities for the logged-in user.\\n\\n**Authentication:** Requires a valid Access Token."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Activity by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/activities/YOUR_ACTIVITY_ID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"activities",
+								"YOUR_ACTIVITY_ID"
+							]
+						},
+						"description": "**Route:** `GET /api/activities/:id`\\n\\n**Description:** Retrieves a single activity by its ID.\\n\\n**Authentication:** Requires a valid Access Token."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointments",
+			"description": "Manage user appointments. Requires authentication.",
+			"item": [
+				{
+					"name": "Create Appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"doctor\": \"YOUR_DOCTOR_ID\",\n    \"time\": \"2023-12-10T14:00:00.000Z\",\n    \"notes\": \"Follow up on recent tests.\",\n    \"status\": \"scheduled\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments"
+							]
+						},
+						"description": "**Route:** `POST /api/appointments`\\n\\n**Description:** Creates a new appointment for the logged-in user.\\n\\n**Authentication:** Requires a valid Access Token.\\n\\n**Validation:**\\n- `time`: Required, ISO8601 date string.\\n- `doctor`: Required, valid MongoDB ID.\\n- `notes`: Optional, string, min 10 characters.\\n- `status`: Optional, must be one of `scheduled`, `completed`, `cancelled`."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Appointments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments"
+							]
+						},
+						"description": "**Route:** `GET /api/appointments`\\n\\n**Description:** Retrieves all appointments for the logged-in user.\\n\\n**Authentication:** Requires a valid Access Token."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Appointment by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/YOUR_APPOINTMENT_ID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								"YOUR_APPOINTMENT_ID"
+							]
+						},
+						"description": "**Route:** `GET /api/appointments/:id`\\n\\n**Description:** Retrieves a single appointment by its ID.\\n\\n**Authentication:** Requires a valid Access Token."
+					},
+					"response": []
+				}
+			]
+		},
+        {
+			"name": "Doctors",
+			"description": "Manage doctors. Requires authentication.",
+			"item": [
+				{
+					"name": "Create Doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dr. John Smith\",\n    \"specialty\": \"Cardiology\",\n    \"contact\": \"+1234567890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/doctors/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"doctors",
+                                "create"
+							]
+						},
+						"description": "**Route:** `POST /api/doctors/create`\\n\\n**Description:** Creates a new doctor.\\n\\n**Authentication:** Requires a valid Access Token.\\n\\n**Validation:**\\n- `name`: Required, not empty.\\n- `specialty`: Required, not empty.\\n- `contact`: Required, valid WhatsApp number (e.g., +1234567890)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Doctors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/doctors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"doctors"
+							]
+						},
+						"description": "**Route:** `GET /api/doctors`\\n\\n**Description:** Retrieves all doctors.\\n\\n**Authentication:** Requires a valid Access Token."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctor by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/doctors/YOUR_DOCTOR_ID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"doctors",
+								"YOUR_DOCTOR_ID"
+							]
+						},
+						"description": "**Route:** `GET /api/doctors/:id`\\n\\n**Description:** Retrieves a single doctor by their ID, along with a list of users who have had appointments with them.\\n\\n**Authentication:** Requires a valid Access Token."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000"
+		},
+		{
+			"key": "authToken",
+			"value": ""
+		}
+	]
+}

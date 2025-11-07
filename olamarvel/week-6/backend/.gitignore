@@ -1,0 +1,9 @@
+node_modules
+.idx
+dist
+.env
+
+
+/src/generated/prisma
+postgres_data
+logfile
