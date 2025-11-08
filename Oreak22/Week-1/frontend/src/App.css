@@ -1,0 +1,18 @@
+.custom-loader {
+  width:45px;
+  height:60px;
+  --c:linear-gradient(#766DF4 0 0);
+  background: 
+    var(--c) 0%   100%,
+    var(--c) 50%  100%,
+    var(--c) 100% 100%;
+  background-size:9px 65%;
+  background-repeat: no-repeat;
+  animation:b5 1s infinite linear;
+}
+@keyframes b5 {
+    20% {background-position:0% 50% ,50% 100%,100% 100%}
+    40% {background-position:0% 0%  ,50% 50% ,100% 100%}
+    60% {background-position:0% 100%,50% 0%  ,100% 50% }
+    80% {background-position:0% 100%,50% 100%,100% 0%  }
+}
