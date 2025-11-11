@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* === Variables === */
+:root {
+  /* Backgrounds */
+  --background: #ffffff; /* white background */
+  --background-alt: #f8f9fa; /* light grey panels */
+
+  /* Text */
+  --foreground: #1f1f1f; /* dark text */
+  --muted: #6b7280; /* slightly grey text */
+
+  /* Accent Colors */
+  --accent-primary: #2563eb; /* blue */
+  --accent-secondary: #f97316; /* orange */
+
+  /* Fonts */
+  --font-body: "Alan Sans", sans-serif;
+  --font-heading: "Montserrat", sans-serif;
+}
+
+/* Hide scrollbars globally when needed */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE + Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Tailwind theme hooks (lets you use bg-background, text-muted etc) */
+@theme inline {
+  --color-background: var(--background);
+  --color-background-alt: var(--background-alt);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+}
+
+/* === Fonts (import your files or use CDN in _document.tsx/_app.tsx) === */
+@font-face {
+  font-family: "Alan Sans";
+  src: url("/assets/fonts/AlanSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/assets/fonts/Montserrat-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* === Apply Styles === */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  color: var(--foreground);
+  margin: 0;
+}

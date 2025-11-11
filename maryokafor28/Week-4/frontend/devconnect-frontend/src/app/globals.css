@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Root theme variables — simplified */
+:root {
+  --radius: 0.625rem;
+
+  /* Light mode defaults */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+
+  --card: oklch(0.97 0 0);
+  --card-foreground: oklch(0.145 0 0);
+}
+
+.dark {
+  /* Dark mode colors */
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+
+  /* Matches bg-gradient-to-br from-gray-900 via-blue-950 to-black */
+  --card: oklch(0.25 0.03 250); /* deep navy-blue card tone */
+  --card-foreground: oklch(0.985 0 0);
+}
+
+/* Base layer */
+@layer base {
+  * {
+    @apply border-transparent outline-none;
+  }
+
+  body {
+    /* 🌌 Gradient background & text color */
+    @apply min-h-screen bg-gradient-to-br from-gray-900 via-blue-950 to-black text-white px-6 py-10;
+  }
+
+  /* Card styling helper */
+  .card {
+    background-color: var(--card);
+    color: var(--card-foreground);
+    border-radius: var(--radius);
+    @apply p-6 shadow-lg backdrop-blur-md border border-white/10;
+  }
+}
