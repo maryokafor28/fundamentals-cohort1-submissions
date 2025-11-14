@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: backend
+    env: node
+    runtime: node
+    region: oregon
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm run start"
+    plan: free
+    rootDir: backend
+    envVars:
+      - key: NODE_ENV
+        value: production
