@@ -1,0 +1,78 @@
+{
+	"info": {
+		"_postman_id": "10639bc7-63bf-4d9c-ba31-06c632243223",
+		"name": "DeployHub Backend API",
+		"description": "Postman API documentation for DeployHub Backend (Week 8 Challenge)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33609178"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/api/health",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"health"
+					]
+				},
+				"description": "Provides a quick status of the DeployHub Backend API to confirm the service is up and responsive."
+			},
+			"response": []
+		},
+		{
+			"name": "Metrics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/metrics",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"metrics"
+					]
+				},
+				"description": "Exposes application runtime metrics for monitoring and alerting."
+			},
+			"response": []
+		},
+		{
+			"name": "Example Error",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/error-test",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"error-test"
+					]
+				},
+				"description": "Returns a controlled error response to validate error handling and observability."
+			},
+			"response": []
+		}
+	]
+}
