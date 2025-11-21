@@ -1,0 +1,13 @@
+# Node
+node_modules/
+dist/
+.env
+*.log
+
+
+# Jest coverage
+coverage/
+
+
+# OS
+.DS_Store
