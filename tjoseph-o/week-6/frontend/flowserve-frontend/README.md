@@ -1,0 +1,43 @@
+# FlowServe Frontend
+
+Minimal React + Vite frontend for the FlowServe API challenge.
+
+## What this includes
+- Vite + React scaffold
+- Simple navigation between Users and Transactions pages
+- `src/services/api.js` - axios instance using `VITE_API_BASE_URL`
+- Users page: list users with pagination and delete action
+- Transactions page: simulate a transaction for a selected user
+
+## Setup
+
+1. Copy environment variables:
+
+```bash
+cp .env.example .env
+# then edit .env to point to your backend, e.g. VITE_API_BASE_URL=http://localhost:3000
+```
+
+2. Install and run
+
+```bash
+npm install
+npm run dev
+```
+
+Open http://localhost:5173 (Vite default) and use the app.
+
+## API expectations
+- GET /users?page=<n>&limit=<m> should return JSON: { users: [...], totalPages: n }
+- DELETE /users/:id to delete a user
+- POST /transactions/simulate with { userId, amount } to simulate a transaction; returns simulation result JSON
+
+Adjust endpoints in `src/services/api.js` if your backend uses different shapes.
+
+## Next steps I can take for you
+- Add Create/Edit user forms and modals
+- Add integration tests or Storybook
+- Wire react-router-dom for URL routes
+- Add Postman collection and example requests
+
+If you'd like, I can now implement Create/Edit modals and wire simple tests. Request next action.# refactored-octo-fiesta

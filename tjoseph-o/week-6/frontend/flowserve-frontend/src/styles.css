@@ -1,0 +1,22 @@
+* { box-sizing: border-box; }
+body { font-family: Inter, system-ui, Arial, sans-serif; margin: 0; background: #f5f7fb; color:#111; }
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+.nav { display:flex; align-items:center; justify-content:space-between; padding: 12px 18px; background: #0b5cff; color: white; }
+.nav .logo { font-weight:700 }
+.nav .links button { margin-left: 8px; background: transparent; border: none; color: white; padding: 8px 12px; border-radius:6px; cursor:pointer }
+.nav .links button.active, .nav .links button:hover { background: rgba(255,255,255,0.12) }
+.main { padding: 20px; max-width: 1000px; margin: 0 auto; width: 100%; }
+.page h2 { margin-top: 0 }
+.table { width: 100%; border-collapse: collapse; margin-top: 12px }
+.table th, .table td { border-bottom: 1px solid #e8eef7; text-align: left; padding: 8px }
+.pagination { display:flex; gap:12px; align-items:center; margin-top: 12px }
+.state { padding: 12px; background: white; border-radius: 6px; margin: 12px 0 }
+.state.error { background: #ffe9e9; color:#721c24 }
+.form { display:flex; flex-direction:column; gap:12px; max-width:480px }
+.form label { display:flex; flex-direction:column; gap:6px }
+.form input, .form select { padding:8px; border-radius:6px; border:1px solid #d0d7e6 }
+.result { margin-top: 16px; background: white; padding:12px; border-radius:6px }
+button { background:#0b5cff; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer }
+button.danger { background: #e64545 }
+button[disabled] { opacity:0.6; cursor:not-allowed }
+@media (max-width:600px) { .main { padding:12px } }
