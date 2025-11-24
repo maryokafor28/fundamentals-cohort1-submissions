@@ -1,0 +1,1 @@
+console.log("Step 1: Loading dotenv"); require("dotenv").config(); console.log("Step 2: Loading express"); const express = require("express"); console.log("Step 3: Creating app"); const app = express(); console.log("Step 4: Starting server"); app.listen(5000, () = console.log("SERVER IS RUNNING ON PORT 5000"); }); console.log("Step 5: Listen called"); 

@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Backend API Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: legacybridge-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - CACHE_TYPE=redis
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - LEGACY_API_URL=https://jsonplaceholder.typicode.com
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - legacybridge-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health/live', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Redis Cache Service
+  redis:
+    image: redis:7-alpine
+    container_name: legacybridge-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    networks:
+      - legacybridge-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+networks:
+  legacybridge-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+    driver: local

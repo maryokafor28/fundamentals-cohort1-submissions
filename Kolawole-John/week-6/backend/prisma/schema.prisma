@@ -1,0 +1,62 @@
+// Prisma Schema for FlowServe
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  email         String        @unique
+  name          String
+  walletBalance Decimal       @default(0) @db.Decimal(15, 2)
+  status        UserStatus    @default(ACTIVE)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  transactions  Transaction[]
+
+  @@index([email])
+  @@index([status])
+  @@map("users")
+}
+
+model Transaction {
+  id          Int               @id @default(autoincrement())
+  userId      Int
+  amount      Decimal           @db.Decimal(15, 2)
+  type        TransactionType
+  status      TransactionStatus @default(PENDING)
+  description String?
+  reference   String            @unique @default(uuid())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([reference])
+  @@map("transactions")
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum TransactionType {
+  CREDIT
+  DEBIT
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REVERSED
+}
